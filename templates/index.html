@@ -7,24 +7,35 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
+      margin: 0;
+      padding: 0;
     }
-    .banner {
+    .header {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      padding: 15px 30px;
+      background-color: #f2f2f2;
+      border-bottom: 2px solid #ccc;
+      justify-content: center;
+      position: relative;
     }
-    .banner img {
-      height: 100px;
-      width:auto;
-      margin-right: 20px;
+    .logo {
+      position: absolute;
+      left: 30px;
     }
-    .banner h1 {
+    .logo img {
+      height: 120px;
+      width: auto;
+    }
+    .header h1 {
       font-size: 48px;
       color: #2c3e50;
+      margin: 0;
+    }
+    .content {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
     }
     .cabinet {
       width: 300px;
@@ -64,20 +75,24 @@
   </style>
 </head>
 <body>
-  <div class="banner">
-    <img src="{{ url_for('static', filename='Alltraq_Logo.svg') }}" alt="Alltraq Logo">
+  <div class="header">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='alltraq-logo.svg') }}" alt="Alltraq Logo">
+    </div>
     <h1>Alltraq</h1>
   </div>
 
-  <div class="cabinet" id="cabinet">
-    {% for shelf_num in range(1, 7) %}
-    <div class="shelf" id="shelf-{{ shelf_num }}">
-      <div class="shelf-label">{{ shelf_num }}</div>
-      {% for box_id in shelves[shelf_num] %}
-      <div class="box" id="box-{{ box_id }}">{{ box_id }}</div>
+  <div class="content">
+    <div class="cabinet" id="cabinet">
+      {% for shelf_num in range(1, 7) %}
+      <div class="shelf" id="shelf-{{ shelf_num }}">
+        <div class="shelf-label">{{ shelf_num }}</div>
+        {% for box_id in shelves[shelf_num] %}
+        <div class="box" id="box-{{ box_id }}">{{ box_id }}</div>
+        {% endfor %}
+      </div>
       {% endfor %}
     </div>
-    {% endfor %}
   </div>
 
   <script>

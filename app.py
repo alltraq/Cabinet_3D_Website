@@ -27,5 +27,13 @@ def handle_box_update(data):
 
     emit('update_shelves', shelf_state, broadcast=True)
 
+@socketio.on('clear_boxes')
+def handle_clear_boxes(data):
+
+    for shelf_boxes in shelf_state.values():
+        shelf_boxes.clear()
+    
+    emit('update_shelves', shelf_state, broadcast=True)
+
 if __name__ == '__main__':
     socketio.run(app, debug=True)
