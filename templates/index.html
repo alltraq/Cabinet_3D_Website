@@ -8,8 +8,23 @@
     body {
       font-family: Arial, sans-serif;
       display: flex;
-      justify-content: center;
-      margin-top: 30px;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .banner {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .banner img {
+      height: 100px;
+      width:auto;
+      margin-right: 20px;
+    }
+    .banner h1 {
+      font-size: 48px;
+      color: #2c3e50;
     }
     .cabinet {
       width: 300px;
@@ -23,6 +38,7 @@
       border-top: 2px solid #888;
       position: relative;
       display: flex;
+      justify-content: center;
       align-items: center;
       padding: 5px;
       min-height: 60px;
@@ -48,6 +64,11 @@
   </style>
 </head>
 <body>
+  <div class="banner">
+    <img src="{{ url_for('static', filename='Alltraq_Logo.svg') }}" alt="Alltraq Logo">
+    <h1>Alltraq</h1>
+  </div>
+
   <div class="cabinet" id="cabinet">
     {% for shelf_num in range(1, 7) %}
     <div class="shelf" id="shelf-{{ shelf_num }}">
