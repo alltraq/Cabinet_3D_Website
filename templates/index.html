@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cabinet Shelf Tracker</title>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .cabinet {
+      width: 300px;
+      border: 4px solid #444;
+      display: flex;
+      flex-direction: column;
+      background-color: #f2f2f2;
+    }
+    .shelf {
+      flex: 1;
+      border-top: 2px solid #888;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      min-height: 60px;
+      box-sizing: border-box;
+    }
+    .shelf:first-child {
+      border-top: none;
+    }
+    .shelf-label {
+      position: absolute;
+      left: -40px;
+      font-weight: bold;
+    }
+    .box {
+      background-color: #3498db;
+      color: white;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 4px;
+      min-width: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="cabinet" id="cabinet">
+    {% for shelf_num in range(1, 7) %}
+    <div class="shelf" id="shelf-{{ shelf_num }}">
+      <div class="shelf-label">{{ shelf_num }}</div>
+      {% for box_id in shelves[shelf_num] %}
+      <div class="box" id="box-{{ box_id }}">{{ box_id }}</div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    const socket = io();
+    socket.on('update_shelves', function(shelves) {
+      for (let i = 1; i <= 6; i++) {
+        const shelfDiv = document.getElementById(`shelf-${i}`);
+        // Remove existing boxes
+        [...shelfDiv.querySelectorAll('.box')].forEach(box => box.remove());
+
+        for (let boxId of shelves[i]) {
+          const box = document.createElement('div');
+          box.className = 'box';
+          box.textContent = boxId;
+          box.id = `box-${boxId}`;
+          shelfDiv.appendChild(box);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
