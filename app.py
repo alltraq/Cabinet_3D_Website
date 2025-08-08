@@ -1,5 +1,11 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+import os
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", 5000))
+
+print(f"Starting server on {HOST}:{PORT}")
+
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -36,4 +42,4 @@ def handle_clear_boxes(data):
     emit('update_shelves', shelf_state, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000) #, debug=True)
+    socketio.run(app, host=HOST, port=PORT) #, debug=True)
